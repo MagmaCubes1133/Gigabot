@@ -2,7 +2,6 @@
 /* eslint-disable brace-style */
 // snipe.js
 const { Client, SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const { name } = require('../../events/messageDelete');
 
 module.exports = {
 	data: new SlashCommandBuilder()
