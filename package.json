@@ -4,7 +4,7 @@
   "description": "An expandable discord bot built for my own server",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1", 
+    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js"
   },
   "author": "",
@@ -12,6 +12,7 @@
   "dependencies": {
     "discord.js": "^14.14.1",
     "dotenv": "^16.3.1",
+    "humanize-duration": "^3.31.0",
     "nodemon": "^3.0.2"
   },
   "devDependencies": {

@@ -12,6 +12,8 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBit
 
 // Command Handling related boilerplate
 client.commands = new Collection();
+client.deletedMessages = new Map();
+client.cooldowns = new Map();
 
 const foldersPath = path.join(__dirname, 'commands');
 const commandFolders = fs.readdirSync(foldersPath);

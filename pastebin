@@ -1,0 +1,39 @@
+/* eslint-disable brace-style */
+const { SlashCommandBuilder } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
+const Duration = require('humanize-duration');
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('snipe')
+		.setDescription('Shows previously deleted messages.'),
+	async execute(bot, interaction, tenor, randomizer, cmd, author) {
+		let msg;
+		if (bot.snipes === undefined) {
+			return interaction.reply('Sorry but I can\'t find any recently deleted message for some reason? Wait. You\'re messing with me right?');
+		} else {
+			msg = bot.snipes.get(interaction.channel.id);
+		}
+		if (!msg) return interaction.reply('Sorry but I can\'t find any recently deleted message for some reason? Wait. You\'re messing with me right?');
+		const deleteauthor = msg.author;
+		const embed = new EmbedBuilder()
+			.setAuthor({ name: `Author: ${deleteauthor.username}`, iconURL: msg.author.displayAvatarURL() })
+			.setColor('Random')
+			.setDescription(msg.content)
+			.setFooter({ text: 'lmao, have fun covering that lie up' });
+
+		if (msg.image) embed.setImage(msg.image);
+
+		const cooldown = bot.used.get(author);
+		if (bot.used.has(author)) {
+			const remaining = Duration(cooldown - Date.now(), { units: ['s'], round: true });
+			interaction.reply({ content: `You are on cooldown. Please wait for ${remaining} before using the command again. Fucking noob.`, ephemeral: true });
+		} else {
+			interaction.reply({ embeds: [embed] });
+		}
+		bot.used.set(author, Date.now() + 10000);
+		setTimeout(() => {
+			bot.used.delete(author);
+		}, 10000);
+	},
+};
